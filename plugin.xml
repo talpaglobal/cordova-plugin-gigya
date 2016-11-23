@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
         id="cordova-plugin-gigya"
-        version="1.0.0">
+        version="1.0.1">
 
     <name>Gigya</name>
 
@@ -54,12 +54,6 @@
                 <param name="onload" value="true"/>
             </feature>
             <plugin name="GigyaConnectPlugin" value="GigyaConnectPlugin"/>
-        </config-file>
-
-        <preference name="GOOGLE_IOS_CLIENT_ID" default="NONE"/>
-
-        <config-file target="*-Info.plist" parent="GoogleClientID">
-            <string>$GOOGLE_IOS_CLIENT_ID</string>
         </config-file>
 
         <header-file src="src/ios/GigyaConnectPlugin.h"/>
