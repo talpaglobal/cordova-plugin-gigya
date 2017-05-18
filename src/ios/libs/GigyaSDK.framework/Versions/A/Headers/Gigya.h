@@ -37,7 +37,7 @@
 #endif
 
 // Consts
-static NSString * _Nonnull const GSGigyaSDKVersion = @"iOS_3.5.5";
+static NSString * _Nonnull const GSGigyaSDKVersion = @"iOS_3.5.1";
 static NSString * _Nonnull const GSDefaultAPIDomain = @"us1.gigya.com";
 static NSString * _Nonnull const GSGigyaSDKDomain = @"com.gigya.GigyaSDK";
 static NSString * _Nonnull const GSInvalidOperationException = @"com.gigya.GigyaSDK:InvalidOperationException";
@@ -96,7 +96,7 @@ typedef NS_ENUM(NSInteger, GSErrorCode) {
  @param user User
  @param error Error
  */
-typedef void(^_Nullable GSUserInfoHandler)(GSUser * _Nullable user, NSError * _Nullable error);
+typedef void(^GSUserInfoHandler)(GSUser *user, NSError *error);
 
 /*!
  Permission request result handler
@@ -105,7 +105,7 @@ typedef void(^_Nullable GSUserInfoHandler)(GSUser * _Nullable user, NSError * _N
  @param error Error
  @param declinedPermissions Declined permissions list
  */
-typedef void(^_Nullable GSPermissionRequestResultHandler)(BOOL granted, NSError * _Nullable error, NSArray * _Nullable declinedPermissions);
+typedef void(^GSPermissionRequestResultHandler)(BOOL granted, NSError *error, NSArray *declinedPermissions);
 
 /*!
  Plugin completion handler
@@ -224,7 +224,7 @@ typedef void(^GSGetSessionCompletionHandler)(GSSession * _Nullable session);
  
  @param provider The provider's name.
  */
-+ (void)loginToProvider:(NSString * _Nonnull)provider;
++ (void)loginToProvider:(NSString *)provider;
 + (void)showLoginDialogOver:(UIViewController *)viewController
                    provider:(NSString *)provider __attribute((deprecated("Use loginToProvider: instead")));
 
@@ -254,9 +254,9 @@ typedef void(^GSGetSessionCompletionHandler)(GSSession * _Nullable session);
  
  @param handler A completion handler that will be invoked when the login process is finished. The handler should have the signature `(GSUser *user, NSError *error)`. If the login was successful, the `error` parameter will be `nil`. Otherwise, you can check the `error.code` (see `GSErrorCode`) or `error.userInfo` to learn why it failed.
  */
-+ (void)loginToProvider:(NSString * _Nonnull)provider
-             parameters:(NSDictionary * _Nullable)parameters
-      completionHandler:(GSUserInfoHandler _Nullable)handler;
++ (void)loginToProvider:(NSString *)provider
+             parameters:(NSDictionary *)parameters
+      completionHandler:(GSUserInfoHandler)handler;
 + (void)showLoginDialogOver:(UIViewController *)viewController
                    provider:(NSString *)provider
                  parameters:(NSDictionary *)parameters
@@ -288,10 +288,10 @@ typedef void(^GSGetSessionCompletionHandler)(GSSession * _Nullable session);
  @param viewController A view controller on which to display the login dialog (used only if the `GigyaLoginDontLeaveApp` setting is enabled).
  @param handler A completion handler that will be invoked when the login process is finished. The handler should have the signature `(GSUser *user, NSError *error)`. If the login was successful, the `error` parameter will be `nil`. Otherwise, you can check the `error.code` (see `GSErrorCode`) or `error.userInfo` to learn why it failed.
  */
-+ (void)loginToProvider:(NSString * _Nonnull)provider
-             parameters:(NSDictionary * _Nullable)parameters
-                   over:(UIViewController * _Nullable)viewController
-      completionHandler:(GSUserInfoHandler _Nullable)handler;
++ (void)loginToProvider:(NSString *)provider
+             parameters:(NSDictionary *)parameters
+                   over:(UIViewController *)viewController
+      completionHandler:(GSUserInfoHandler)handler;
 
 /*!
  Displays a provider selection dialog, allowing the user to login to any of the supported providers.
@@ -621,47 +621,30 @@ typedef void(^GSGetSessionCompletionHandler)(GSSession * _Nullable session);
  This method works only with <a target="_blank" href="http://developers.gigya.com/display/GD/iOS#iOS-AddingFacebookNativeLogin">Facebook native login</a>, and must be called after the user logged in.
  
  @param permissions A comma delimited list of Facebook publish permissions to request from the user. Please refer to Facebook's <a target="_blank" href="https://developers.facebook.com/docs/reference/login/#permissions">documentation</a> for a complete list of possible values.
- @param viewController The view controller to present from. If nil, the topmost view controller will be automatically determined as best as possible.
  @param handler A completion handler that will be invoked when the process if finished. The handler should have the signature `(BOOL granted, NSError *error, NSArray *declinedPermissions)`. If the `granted` parameter is `NO`, you can check the `error` parameter to learn why it failed. The `declinedPermissions` array, if exists, holds the permissions the user has declined in the process. These permissions can be requested again later using this method.
  */
 + (void)requestNewFacebookPublishPermissions:(NSString *)permissions
-							  viewController:(UIViewController * _Nullable)viewController
-							 responseHandler:(GSPermissionRequestResultHandler)handler;
+                             responseHandler:(GSPermissionRequestResultHandler)handler;
 
 /*!
  Asks the user for new Facebook read permissions. This method must be used if the user has previously declined the wanted permissions. 
  This method works only with <a target="_blank" href="http://developers.gigya.com/display/GD/iOS#iOS-AddingFacebookNativeLogin">Facebook native login</a>, and must be called after the user logged in.
  
  @param permissions A comma delimited list of Facebook publish permissions to request from the user. Please refer to Facebook's <a target="_blank" href="https://developers.facebook.com/docs/reference/login/#permissions">documentation</a> for a complete list of possible values.
- @param viewController The view controller to present from. If nil, the topmost view controller will be automatically determined as best as possible.
  @param handler A completion handler that will be invoked when the process if finished. The handler should have the signature `(BOOL granted, NSError *error, NSArray *declinedPermissions)`. If the `granted` parameter is `NO`, you can check the `error` parameter to learn why it failed. The `declinedPermissions` array, if exists, holds the permissions the user has declined in the process. These permissions can be requested again later using this method.
  */
 + (void)requestNewFacebookReadPermissions:(NSString *)permissions
-						   viewController:(UIViewController * _Nullable)viewController
-						  responseHandler:(GSPermissionRequestResultHandler)handler;
+                          responseHandler:(GSPermissionRequestResultHandler)handler;
 
 /** @name Handling Application Events */
-
-/*!
- Handles URLs being opened by your AppDelegate. This method must be called and returned from your AppDelegate's `application:openURL:options:` method.
- 
- @param url The url parameter provided by the AppDelegate method.
- @param app The app parameter provided by the AppDelegate method.
- @param options The options parameter provided by the AppDelegate method.
- 
- @returns Returns `YES` if URL was handled.
- */
-+ (BOOL)handleOpenURL:(NSURL *)url
-                  app:(UIApplication *)app
-              options:(NSDictionary<NSString *, id> *)options;
 
 /*!
  Handles URLs being opened by your AppDelegate. This method must be called and returned from your AppDelegate's `application:handleOpenURL:` or `application:openURL:sourceApplication:annotation:` method.
  
  @param url The url parameter provided by the AppDelegate method.
- @param application The application parameter provided by the AppDelegate method.
- @param sourceApplication The sourceApplication parameter provided by the AppDelegate method, or `nil` if not present.
- @param annotation The annotation parameter provided by the AppDelegate method, or `nil` if not present.
+ @param application The application parameter provided by the AppDelegate
+ @param sourceApplication The sourceApplication parameter provided by the AppDelegate, or `nil` if not present.
+ @param annotation The annotation parameter provided by the AppDelegate, or `nil` if not present.
  
  @returns Returns `YES` if URL was handled.
  */

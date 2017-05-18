@@ -9,7 +9,7 @@
  @param response Response
  @param error Error
  */
-typedef void(^ _Nullable GSResponseHandler)(GSResponse * _Nullable response, NSError * _Nullable error);
+typedef void(^GSResponseHandler)(GSResponse *response, NSError *error);
 
 /** This class can be used to send requests to the <a target="_blank" href="http://developers.gigya.com/display/GD/REST+API">Gigya REST API</a>.
  
@@ -37,7 +37,7 @@ typedef void(^ _Nullable GSResponseHandler)(GSResponse * _Nullable response, NSE
  @param method The API method.
  @returns A new `GSRequest` object for the method.
  */
-+ (GSRequest *)requestForMethod:(NSString * _Nonnull)method;
++ (GSRequest *)requestForMethod:(NSString *)method;
 
 /*!
  Creates a `GSRequest` object for a given method and parameters.
@@ -46,28 +46,22 @@ typedef void(^ _Nullable GSResponseHandler)(GSResponse * _Nullable response, NSE
  @param parameters A dictionary of parameters to pass to the method.
  @returns A new `GSRequest` object for the method and parameters.
  */
-+ (GSRequest *)requestForMethod:(NSString * _Nonnull)method parameters:(NSDictionary * _Nullable)parameters;
++ (GSRequest *)requestForMethod:(NSString *)method parameters:(NSDictionary*)parameters;
 
 /*!
  The API method name.
  */
-@property (nonatomic, copy) NSString * _Nonnull method;
+@property (nonatomic, copy) NSString *method;
 
 /*!
  The paremeters for the API method.
  */
-@property (nonatomic, strong) NSMutableDictionary * _Nullable parameters;
+@property (nonatomic, strong) NSMutableDictionary* parameters;
 
 /*!
  Indicates whether HTTPS should be used. The default is `YES`. Overrides the global setting in [Gigya].
  */
 @property (nonatomic) BOOL useHTTPS;
-
-/*!
- Indicates whether HTTPS should be used. The default is `YES`. Overrides the global setting in [Gigya].
- */
-@property (nonatomic) BOOL _useHTTPGet;
-
 /*!
  Indicates the time in seconds before a request times out. Overrides the global setting in [Gigya].
  */

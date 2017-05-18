@@ -1,6 +1,5 @@
 #import <Foundation/Foundation.h>
 #import "GSObject.h"
-#import "GSRequest.h"
 
 /** 
  This class represents a response from the <a target="_blank" href="http://developers.gigya.com/display/GD/REST+API">Gigya REST API</a>.
@@ -12,12 +11,6 @@
     NSString *token = response[@"token"];
  */
 @interface GSResponse : GSObject
-
-+ (void)responseForMethod:(NSString *)method
-                     data:(NSData *)data
-        completionHandler:(GSResponseHandler)handler;
-
-+ (GSResponse *)responseWithError:(NSError *)error;
 
 /** @name Basic Response Information */
 
