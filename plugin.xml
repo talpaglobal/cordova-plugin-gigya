@@ -15,11 +15,6 @@
         <clobbers target="gigyaClient"/>
     </js-module>
 
-    <dependency
-            id="es6-promise-plugin"
-            url="https://github.com/vstirbu/PromisesPlugin.git">
-    </dependency>
-
     <platform name="android">
 
         <config-file target="res/xml/config.xml" parent="/*">
