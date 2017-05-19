@@ -56,16 +56,10 @@
             <plugin name="GigyaConnectPlugin" value="GigyaConnectPlugin"/>
         </config-file>
 
-        <preference name="GOOGLE_IOS_CLIENT_ID" default="NONE"/>
-
-        <config-file target="*-Info.plist" parent="GoogleClientID">
-            <string>$GOOGLE_IOS_CLIENT_ID</string>
-        </config-file>
-
         <header-file src="src/ios/GigyaConnectPlugin.h"/>
         <source-file src="src/ios/GigyaConnectPlugin.m"/>
 
-        <framework src="src/ios/libs/GigyaSDK.framework" custom="true"/>
+        <framework src="Gigya-iOS-SDK" type="podspec" spec="~> 3.5.0" />
 
         <framework src="Social.framework" weak="true"/>
         <framework src="Accounts.framework" weak="true"/>
